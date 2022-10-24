@@ -132,10 +132,12 @@ public class Interfaz {
     public Punto ingresarPunto(char nomPunto) {
         double pX = 0, pY = 0;
         String p = ingresar(titulo, "Ingrese la coordenada " + nomPunto + " (x,y):");
-
-        if (p.contains(",") && !(p.substring(p.indexOf(',') + 1, p.length())).isEmpty()) {
-            pX = Double.parseDouble(p.substring(0, p.indexOf(',')));
-            pY = Double.parseDouble(p.substring(p.indexOf(',') + 1, p.length()));
+        
+        String pXY [] = p.split(",");
+        
+        if (pXY.length == 2 && !pXY[1].isEmpty()) {
+            pX = Double.parseDouble(pXY[0]);
+            pY = Double.parseDouble(pXY[1]);
             return new Punto(nomPunto, pX, pY);
         } else {
             imprimir("Error", "Valores incorrectos, intente de nuevo");
@@ -149,12 +151,15 @@ public class Interfaz {
      */
     public Pendiente ingresarPendiente() {
         String p = ingresar(titulo, "Pendiente (para fracción introduzca '/')");
+        
+        String pND[] = p.split("/");
+        
         if (!p.contains("/")) {
             double m = Double.parseDouble(p);
             return new Pendiente(m);
-        } else if (!(p.substring(p.indexOf('/') + 1, p.length())).isEmpty()) {
-            int n = Integer.parseInt(p.substring(0, p.indexOf('/')));
-            int d = Integer.parseInt(p.substring(p.indexOf('/') + 1, p.length()));
+        } else if (pND.length==2 && !pND[1].isEmpty()) {
+            int n = Integer.parseInt(pND[0]);
+            int d = Integer.parseInt(pND[1]);
             return new Pendiente(n, d);
         } else {
             imprimir("Error", "Valores incorrectos, intente de nuevo");
